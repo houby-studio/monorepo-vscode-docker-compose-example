@@ -5,10 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (web)",
+      "name": "ASPNET.APP: .NET Core Launch (web)",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build",
+      "preLaunchTask": "ASPNET.APP: build",
       "program": "${workspaceFolder}/ASPNET.APP/bin/Debug/net5.0/ASPNET.APP.dll",
       "args": [],
       "cwd": "${workspaceFolder}/ASPNET.APP",
@@ -25,13 +25,23 @@
       }
     },
     {
-      "name": "Docker .NET Core Launch",
+      "name": "ASPNET.APP: Docker .NET Core Launch",
       "type": "docker",
       "request": "launch",
-      "preLaunchTask": "docker-run: debug",
+      "preLaunchTask": "ASPNET.APP: docker-run: debug",
       "netCore": {
         "appProject": "${workspaceFolder}/ASPNET.APP/ASPNET.APP.csproj"
       }
+    },
+    {
+      "name": "ASPNET.APP: Docker .NET Core Attach (Preview)",
+      "type": "docker",
+      "request": "attach",
+      "platform": "netCore",
+      "sourceFileMap": {
+        "/src": "${workspaceFolder}"
+      },
+      "containerName": "monorepo-vscode-docker-compose-example_aspnetapp_1"
     }
   ]
 }

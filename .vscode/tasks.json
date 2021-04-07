@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build",
+      "label": "ASPNET.APP: build",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -14,7 +14,7 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "publish",
+      "label": "ASPNET.APP: publish",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -26,7 +26,7 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "watch",
+      "label": "ASPNET.APP: watch",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -40,9 +40,9 @@
     },
     {
       "type": "docker-build",
-      "label": "docker-build: debug",
+      "label": "ASPNET.APP: docker-build: debug",
       "dependsOn": [
-        "build"
+        "ASPNET.APP: build"
       ],
       "dockerBuild": {
         "tag": "monorepovscodedockercomposeexample:dev",
@@ -57,9 +57,9 @@
     },
     {
       "type": "docker-build",
-      "label": "docker-build: release",
+      "label": "ASPNET.APP: docker-build: release",
       "dependsOn": [
-        "build"
+        "ASPNET.APP: build"
       ],
       "dockerBuild": {
         "tag": "monorepovscodedockercomposeexample:latest",
@@ -73,9 +73,9 @@
     },
     {
       "type": "docker-run",
-      "label": "docker-run: debug",
+      "label": "ASPNET.APP: docker-run: debug",
       "dependsOn": [
-        "docker-build: debug"
+        "ASPNET.APP: docker-build: debug"
       ],
       "dockerRun": {},
       "netCore": {
@@ -85,9 +85,9 @@
     },
     {
       "type": "docker-run",
-      "label": "docker-run: release",
+      "label": "ASPNET.APP: docker-run: release",
       "dependsOn": [
-        "docker-build: release"
+        "ASPNET.APP: docker-build: release"
       ],
       "dockerRun": {},
       "netCore": {
