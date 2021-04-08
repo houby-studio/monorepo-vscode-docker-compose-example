@@ -42,6 +42,45 @@
         "/src": "${workspaceFolder}"
       },
       "containerName": "monorepo-vscode-docker-compose-example_aspnetapp_1"
+    },
+    {
+      "name": "quasar-app: Quasar Launch (web)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}/quasar-app/src",
+      "breakOnLoad": true,
+      "preLaunchTask": "quasar-app: quasar dev -m pwa",
+      "postDebugTask": "quasar-app: kill task",
+      "timeout": 60000,
+      "sourceMapPathOverrides": {
+        "webpack:///./src/*": "${webRoot}/*"
+      }
+    },
+    {
+      "name": "quasar-app: Docker Quasar Launch",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}/quasar-app/src",
+      "breakOnLoad": true,
+      "preLaunchTask": "quasar-app: docker-run: debug",
+      "postDebugTask": "quasar-app: docker-run: stop",
+      "timeout": 60000,
+      "sourceMapPathOverrides": {
+        "webpack:///./src/*": "${webRoot}/*"
+      }
+    },
+    {
+      "name": "quasar-app: Docker Quasar Attach",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}/quasar-app/src",
+      "breakOnLoad": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./src/*": "${webRoot}/*"
+      }
     }
   ]
 }

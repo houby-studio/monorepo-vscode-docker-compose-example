@@ -20,3 +20,16 @@ services:
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
       - ~/AppData/Roaming/ASP.NET/Https:/https/
+  quasarapp:
+    image: quasarapp
+    build:
+      context: quasar-app
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 8080:8080
+      - 9229:9229
+    volumes: 
+      - ./quasar-app/:/usr/src/app
+    command: "dev -m pwa"

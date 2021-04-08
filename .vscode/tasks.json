@@ -93,6 +93,110 @@
       "netCore": {
         "appProject": "${workspaceFolder}/ASPNET.APP/ASPNET.APP.csproj"
       }
+    },
+    {
+      // Launch 'quasar dev -m pwa' as background task, so Launch command won't wait until it terminates
+      // problemMatcher and background seems to be necessary, although it is practically useless
+      // cwd changes directory to Quasar's project root folder
+      "label": "quasar-app: quasar dev -m pwa",
+      "command": "quasar.cmd",
+      "type": "shell",
+      "args": [
+        "dev",
+        "-m",
+        "pwa"
+      ],
+      "isBackground": true,
+      "promptOnClose": false,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": ".",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "."
+        }
+      },
+      "options": {
+        "cwd": "./quasar-app/"
+      }
+    },
+    {
+      // In VSCode v1.55.0 we cannot run multiple commands or command with args, therefore we create two tasks with dependency
+      "label": "quasar-app: terminate",
+      "type": "process",
+      "command": "${command:workbench.action.tasks.terminate}"
+    },
+    {
+      // In VSCode v1.55.0 we cannot run multiple commands or command with args, therefore we create two tasks with dependency
+      "label": "quasar-app: kill task",
+      "dependsOn": "quasar-app: terminate",
+      "type": "process",
+      "command": "${command:workbench.action.acceptSelectedQuickOpenItem}"
+    },
+    {
+      // Standard VSCode template docker-build for node.js docker container with corrected paths to subfolder
+      "label": "quasar-app: docker-build",
+      "type": "docker-build",
+      "platform": "node",
+      "dockerBuild": {
+        "dockerfile": "${workspaceFolder}/quasar-app/Dockerfile",
+        "context": "${workspaceFolder}/quasar-app",
+        "pull": true
+      },
+      "node": {
+        "package": "${workspaceFolder}/quasar-app/package.json"
+      }
+    },
+    {
+      // We are using Quasar CLI commands to run project, therefore VSCode cant override CMD, ensure enableDebugging is set to false
+      "label": "quasar-app: docker-run: debug",
+      "type": "docker-run",
+      "dependsOn": [
+        "quasar-app: docker-build"
+      ],
+      "dockerRun": {
+        "env": {
+          "DEBUG": "*",
+          "NODE_ENV": "development",
+          "PORT": "8080"
+        },
+        "command": "dev -m pwa",
+        "ports": [
+          {
+            "containerPort": 8080,
+            "hostPort": 8080,
+            "protocol": "tcp"
+          },
+          {
+            "containerPort": 9229,
+            "hostPort": 9229,
+            "protocol": "tcp"
+          }
+        ],
+        "volumes": [
+          {
+            "localPath": "${workspaceFolder}/quasar-app/",
+            "containerPath": "/usr/src/app",
+            "permissions": "rw"
+          }
+        ]
+      },
+      "node": {
+        "package": "${workspaceFolder}/quasar-app/package.json",
+        "enableDebugging": false
+      }
+    },
+    {
+      "label": "quasar-app: docker-run: stop",
+      "type": "shell",
+      "command": "docker container stop quasarapp-dev && docker container rm quasarapp-dev",
     }
   ]
 }

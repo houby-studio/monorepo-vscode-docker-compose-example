@@ -10,3 +10,12 @@ services:
       dockerfile: ASPNET.APP/Dockerfile
     ports:
       - 80
+  quasarapp:
+    image: quasarapp
+    build:
+      context: quasar-app
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 4000:4000
