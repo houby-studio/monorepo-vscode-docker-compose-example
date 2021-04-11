@@ -503,11 +503,11 @@ CMD [ "serve" ]
     - Right-click docker-compose.debug.yml and select Compose Up
     - Run and Debug: quasar-app: Docker Quasar Attach
 
-## Setting up VSCode
+## What we have so far
 
-### Extensions
+Now we have one workspace with two projects, which can be run and debugged in VSCode on host machine or in docker container. We also have the most desirable option, which is to run both proejcts at once using docker-compose.debug.yml and attaching to one or the other.
 
-### Settings
+You can take it from here and do whatever you want with your project. We however don't end here. We will implement Azure AD login on frontend and Azure AD authorization on backend.
 
 ## Create Kong
 
@@ -530,3 +530,7 @@ docker run -d --name kong-ee --network=kong-ee-net -e "KONG_DATABASE=postgres" -
 ```
 
 Now you can browse <http://localhost:8002/overview>
+
+## Links
+
+- <https://forum.quasar-framework.org/topic/5659/firebase-with-microsoft-azure-ad-authentication>
