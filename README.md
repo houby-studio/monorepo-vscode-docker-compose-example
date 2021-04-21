@@ -156,10 +156,19 @@ This step is optional. If you do not want to setup authentication or want to cho
 - Navigate to Azure Active Directory > App registration > New registration
   - Name: quasar-app
   - Supported account types: Single tenant
-  - Redirect URI (optional): <https://localhost/>
+  - Redirect URI (optional): <https://localhost/__/auth/handler>
   - Register
   - Note Application (client) ID
   - Note Directory (tenant) ID
+  - TODO: Setup Authentication
+    - Select Authentication
+    - Check Access tokens and ID tokens for Implicit grant and hybrid flows
+    - (Enable the following mobile and desktop flows - select Yes?)
+  - TODO: Setup secret
+    - Select Certificates & secrets
+    - Click on New client secret
+    - Write description, select expiry date and click on Add
+    - Note the value of the secret
   - TODO: Setup Token configuration
     - Select Token configuration
     - Click on Add optional claim
@@ -168,7 +177,7 @@ This step is optional. If you do not want to setup authentication or want to cho
     - Check Turn on Microsoft Graph email, profile permission and click on Add
   - TODO: Setup API permissions
     - Select API permissions
-    - CLick on Grant admin consent for COMPANY
+    - Click on Grant admin consent for COMPANY
     - Click on Yes
 
 #### Quasar Create project
@@ -509,6 +518,87 @@ Now we have one workspace with two projects, which can be run and debugged in VS
 
 You can take it from here and do whatever you want with your project. We however don't end here. We will implement Azure AD login on frontend and Azure AD authorization on backend.
 
+## Quasar - Azure AD authentication
+
+We will utilize Firebase to get taste of what is Google capable of providing to us.
+
+### Setup Firebase
+
+- Launch internet browser and browse to <https://firebase.google.com/>
+- Login with your Google account
+- Click on **Get Started**
+- Click on **Create a project**
+- Choose project name, accept terms and click on **Continue**
+- Enable Google Analytics for this project and click on **Continue**
+- Select your country, use default settings, accept terms and click on **Create project**
+- Select **Build** in the left menu, click on **Authentication**
+- Click on **Set up sign-in method**
+- Click on **Microsoft**
+- Provide Application ID and Application secret created from [Quasar Azure Application Registration](#-Quasar-Azure-Application-Registration)
+- Click on **Project Overview**
+- Click on **</>**
+- Choose app name and click on **Register app**
+- Copy the generated code to be inserted to your app code later
+
+#### Azure
+
+- Navigate to <https://portal.azure.com> and add redirect uri to your App Registration (e.g. <https://houby-studio-quasar-app.firebaseapp.com/__/auth/handler>)
+
+### Setup Quasar Firebase authentication
+
+- Execute following commands to navigate to your project folder, install firebase, create boot file and configure it
+
+```shell
+cd ./quasar-app
+yarn add firebase
+quasar new boot firebase
+```
+
+- Add the firebase boot file to quasar.conf.js, it will look like this
+
+```js
+boot: [
+      'i18n',
+      'axios',
+      'firebase'
+    ],
+```
+
+- Insert following code to ./quasar-app/src/boot/fire
+
+```js
+TODO:
+```
+
+- Install dotenv
+
+```shell
+yarn add -D dotenv
+```
+
+- Create following file ./quasar-app/.env
+
+```text
+# DEVELOPMENT FIREBASE CONFIG
+API_KEY=######
+AUTH_DOMAIN=######
+DATA_BASE_URL=######
+PROJECT_ID=######
+STORAGE_BUCKET=######
+MESSAGING_SENDER_ID=######
+APP_ID=######
+API_ENDPOINT=######
+```
+
+- Add env row to build quasar.conf.js
+
+```js
+build: {
+  devtool: 'source-map',
+  vueRouterMode: 'hash', // available values: 'hash', 'history'
+  env: require('dotenv').config().parsed,
+```
+
 ## Create Kong
 
 KONG may be used as API Gateway, if simple nginx reverse proxy won't prove useful.
@@ -534,3 +624,9 @@ Now you can browse <http://localhost:8002/overview>
 ## Links
 
 - <https://forum.quasar-framework.org/topic/5659/firebase-with-microsoft-azure-ad-authentication>
+- <https://dev.to/quasar/to-the-stars-with-quasar-firebase-initial-service-structure-1fcf>
+- <https://next.quasar.dev/quasar-cli/boot-files#anatomy-of-a-boot-file>
+- <https://firebase.google.com/docs/auth/web/microsoft-oauth?authuser=6>
+- <https://firebase.google.com/docs/web/setup?authuser=6>
+
+-

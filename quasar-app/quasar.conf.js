@@ -30,7 +30,8 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli/boot-files
     boot: [
       'i18n',
-      'axios'
+      'axios',
+      'firebase'
     ],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -56,7 +57,7 @@ module.exports = configure(function (ctx) {
     build: {
       devtool: 'source-map',
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-
+      env: require('dotenv').config().parsed,
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
