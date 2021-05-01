@@ -23,11 +23,17 @@ const FIREBASE_CONFIG : FirebaseConfig = {
   measurementId: process.env.MEASUREMENT_ID as string
 }
 
-export default boot(({ app }) => {
+export default boot(({ store, Vue }) => {
   const fb = firebaseServices.fBInit(FIREBASE_CONFIG)
 
-  // Validation that our service structure is working
-  // with an initialize Firebase application and auth instance.
-  console.log('Firebase App Instantiation:', fb)
-  console.log('Firebase Auth Module:', firebaseServices.auth())
+  // Tell the application what to do when the
+  // authentication state has changed
+  firebaseServices.auth().onAuthStateChanged((user) => {
+    firebaseServices.handleOnAuthStateChanged(store, user)
+  }, (error) => {
+    console.error(error)
+  })
+
+  Vue.prototype.$fb = firebaseServices
+  store.$fb = firebaseServices
 })

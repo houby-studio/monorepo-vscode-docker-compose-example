@@ -16,6 +16,18 @@ export const auth = () => {
  * @param  {Object} config - FIREBASE_CONFIG during the build process
  * @returns {App} - Creates and initializes a Firebase app instance.
  */
-export const fBInit = (config : any) => {
+
+interface FirebaseConfig {
+  apiKey: string;
+  authDomain: string;
+  databaseURL: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+  measurementId: string;
+}
+
+export const fBInit = (config: FirebaseConfig) => {
   return firebase.initializeApp(config)
 }

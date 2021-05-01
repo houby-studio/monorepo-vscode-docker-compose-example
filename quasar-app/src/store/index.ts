@@ -6,6 +6,8 @@ import {
   useStore as vuexUseStore
 } from 'vuex'
 
+import auth from './auth'
+
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -38,7 +40,7 @@ export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-ke
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      // example
+      auth
     },
 
     // enable strict mode (adds overhead!)
